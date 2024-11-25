@@ -140,18 +140,13 @@ SIMPLE_JWT = {
 
 # SWAGGER settings
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-SWAGGER_SETTINGS = {
-    "SECURITY_DEFINITIONS": {
-        "Bearer": {"type": "apiKey", "name": "Authorization", "in": "header"}
-    }
-}
 SPECTACULAR_SETTINGS = {
     "TITLE": "API",
-    "DESCRIPTION": "",
+    "DESCRIPTION": "API Description",
     "VERSION": "1.0.0",
     "SCHEMA_PATH_PREFIX": r"/api/v[0-9]",
-    "SERVE_INCLUDE_SCHEMA": False,  # Whether to serve the schema at the API root URL
-    "COMPONENT_SPLIT_REQUEST": True,  # Splits request and response components for cleaner and more precise schema
+    "SERVE_INCLUDE_SCHEMA": False,
+    "COMPONENT_SPLIT_REQUEST": True,
     "SERVE_SWAGGER_UI": True,
     "SERVE_REDOC_UI": True,
     "SWAGGER_UI_DIST": "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/",
