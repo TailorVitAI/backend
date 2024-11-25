@@ -1,22 +1,30 @@
-from django.urls import path, re_path
+from django.urls import path
 
-from .views import schema_view
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView,
+)
 
 
 urlpatterns = [
-    re_path(
-        r"^swagger(?P<format>\.json|\.yaml)$",
-        schema_view.without_ui(cache_timeout=0),
-        name="schema-json",
+    path(
+        "swagger/schema/",
+        SpectacularAPIView.as_view(),
+        name="schema",
     ),
     path(
         "swagger/",
-        schema_view.with_ui("swagger", cache_timeout=0),
-        name="schema-swagger-ui",
+        SpectacularSwaggerView.as_view(
+            url_name="schema",
+        ),
+        name="swagger-ui",
     ),
     path(
-        "redoc/",
-        schema_view.with_ui("redoc", cache_timeout=0),
-        name="schema-redoc",
+        "swagger/redoc",
+        SpectacularRedocView.as_view(
+            url_name="schema",
+        ),
+        name="redoc",
     ),
 ]

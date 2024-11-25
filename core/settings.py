@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt",
-    "drf_yasg",
+    "drf_spectacular",
     #
     "apps.authentication",
     "apps.main",
@@ -125,6 +125,7 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 # JWT settings
@@ -143,6 +144,20 @@ SWAGGER_SETTINGS = {
     "SECURITY_DEFINITIONS": {
         "Bearer": {"type": "apiKey", "name": "Authorization", "in": "header"}
     }
+}
+SPECTACULAR_SETTINGS = {
+    "TITLE": "API",
+    "DESCRIPTION": "",
+    "VERSION": "1.0.0",
+    "SCHEMA_PATH_PREFIX": r"/api/v[0-9]",
+    "SERVE_INCLUDE_SCHEMA": False,  # Whether to serve the schema at the API root URL
+    "COMPONENT_SPLIT_REQUEST": True,  # Splits request and response components for cleaner and more precise schema
+    "SERVE_SWAGGER_UI": True,
+    "SERVE_REDOC_UI": True,
+    "SWAGGER_UI_DIST": "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/",
+    "REDOC_DIST": "https://cdn.jsdelivr.net/npm/redoc@latest/",
+    "TAGS_SORTER": "alpha",
+    "OPERATIONS_SORTER": "method",
 }
 
 # Logging

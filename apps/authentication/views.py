@@ -1,20 +1,40 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import views, viewsets, filters
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from drf_yasg.utils import swagger_auto_schema
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 from apps.common.views import Authentication
 
 from .models import User
 from .serializers import UserSummarySerializer, UserCreateSerializer
 
+TAGS = ["Authentication"]
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+
+    @extend_schema(tags=TAGS)
+    def post(self, request: views.Request, *args, **kwargs) -> Response:
+        return super().post(request, *args, **kwargs)
+
+
+class CustomTokenRefreshView(TokenRefreshView):
+
+    @extend_schema(tags=TAGS)
+    def post(self, request: views.Request, *args, **kwargs) -> Response:
+        return super().post(request, *args, **kwargs)
+
 
 class UserView(views.APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
-    @swagger_auto_schema(responses={200: UserSummarySerializer})
+    @extend_schema(responses={200: UserSummarySerializer}, tags=TAGS)
     def get(self, request):
         user: User = request.user
         serializer = UserSummarySerializer(user)
@@ -52,8 +72,10 @@ class UsersViewSet(
 
         return queryset
 
+    @extend_schema(tags=["Authentication"])
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
+    @extend_schema(tags=["Authentication"])
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
