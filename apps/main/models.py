@@ -98,7 +98,7 @@ class Experience(BaseModel):
         blank=True,
     )
     category = models.CharField(
-        choices=Type.choices,
+        choices=Category.choices,
         max_length=3,
         null=True,
         blank=True,
