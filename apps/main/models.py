@@ -11,6 +11,7 @@ class Profile(BaseModel):
     )
     summary = models.TextField(
         default="",
+        blank=True,
     )
     company = models.CharField(
         max_length=64,
@@ -49,15 +50,19 @@ class Profile(BaseModel):
     )
     skills = models.JSONField(
         default=list,
+        blank=True,
     )
     languages = models.JSONField(
         default=list,
+        blank=True,
     )
     hobbies = models.JSONField(
         default=list,
+        blank=True,
     )
     interests = models.JSONField(
         default=list,
+        blank=True,
     )
 
 
