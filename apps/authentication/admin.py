@@ -6,32 +6,20 @@ from .models import User
 class UserAdmin(BaseUserAdmin):
     list_display = (
         "username",
-        "role",
-        "type",
-        "email",
         "first_name",
         "last_name",
         "is_staff",
-        "base_currency",
-        "phone",
-        "tax_invoices",
     )
-    fieldsets = BaseUserAdmin.fieldsets + (
-        (
-            "Custom fields",
-            {
-                "fields": (
-                    "role",
-                    "type",
-                    "base_currency",
-                    "identification",
-                    "trade_id",
-                    "phone",
-                    "tax_invoices",
-                ),
-            },
-        ),
-    )
+    # fieldsets = BaseUserAdmin.fieldsets + (
+    #     (
+    #         "Custom fields",
+    #         {
+    #             "fields": (
+
+    #             ),
+    #         },
+    #     ),
+    # )
 
 
 admin.site.register(User, UserAdmin)
