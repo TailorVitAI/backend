@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  backend:
+    restart: always
+    container_name: app_backend
+    hostname: app_backend
+    build:
+      context: ./
+      dockerfile: ./deploy/dockerfiles/backend.dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .volumes/logs:/code/logs
+      - static_volume:/code/static
+    env_file:
+      - ./deploy/environments/backend.env
+    expose:
+      - 8000
+
+  nginx:
+    image: nginx:stable
+    restart: unless-stopped
+    container_name: app_nginx
+    hostname: app_nginx
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./deploy/config/ssl:/etc/nginx/ssl
+      - static_volume:/var/www/backend/staticfiles
+      - .volumes/logs/nginx:/var/log/nginx
+
+  postgres:
+    restart: unless-stopped
+    container_name: app_postgres
+    hostname: app_postgres
+    build:
+      context: ./
+      dockerfile: ./deploy/dockerfiles/postgres.dockerfile
+    env_file:
+      - ./deploy/environments/postgres.env
+    expose:
+      - 5432
+    volumes:
+      - .volumes/postgres_data:/var/lib/postgresql/data

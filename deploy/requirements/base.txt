@@ -1,0 +1,12 @@
+Django==5.0.1
+django-environ==0.8.1
+psycopg2==2.9.9
+django-simple-history==3.7.0
+django-cors-headers==4.3.1
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.3.1
+django-filter==24.3
+drf-yasg==1.21.7
+uvicorn[standard]~=0.22.0
+gunicorn~=20.1.0
+openpyxl==3.1.2

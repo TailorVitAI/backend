@@ -1,0 +1,80 @@
+name: Deploy on tag on main
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Send Message to Telegram on Initiation
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            ✔ Successful github action initiation (Backend):
+
+            ${{ github.event.head_commit.message }}
+      
+            by ${{ github.event.head_commit.committer.name }} (${{ github.event.head_commit.committer.username }})
+            
+            ${{ github.event.head_commit.url }}
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_SSH_HOST }}
+          username: ${{ secrets.SERVER_SSH_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd ~/apps
+            eval "$(ssh-agent -s)"
+            ssh-add ~/.ssh/github-deploy-key
+            cd backend/
+            git checkout main
+            git pull origin main
+            echo "${{ secrets.ENV_BACKEND }}" > ./deploy/environments/backend.env
+            echo "${{ secrets.ENV_POSTGRES }}" > ./deploy/environments/postgres.env
+            docker-compose down
+            docker-compose up -d --build    
+
+      - name: Send Message to Telegram on Success
+        if: success()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            ✔ Successful deployment (Backend):
+
+            There is a new release: ${{ secrets.PROJECT_URL }}
+
+            version: `${{ github.ref_name }}`
+  
+            ${{ github.event.head_commit.message }}
+      
+            by ${{ github.event.head_commit.committer.name }} (${{ github.event.head_commit.committer.username }})
+            
+            ${{ github.event.head_commit.url }}
+
+      - name: Send Message to Telegram on Failure
+        if: failure()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            ❌ Deployment failed (Backend):
+      
+            ${{ github.event.head_commit.message }}
+      
+            by ${{ github.event.head_commit.committer.name }} (${{ github.event.head_commit.committer.username }})
+
+            ${{ github.event.head_commit.url }}

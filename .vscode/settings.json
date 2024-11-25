@@ -1,0 +1,7 @@
+{
+    "python.analysis.inlayHints.callArgumentNames": "off",
+    "python.analysis.typeCheckingMode": "standard",
+    "cSpell.words": [
+
+    ]
+}
