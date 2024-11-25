@@ -19,7 +19,6 @@ class UserSummarySerializer(serializers.ModelSerializer):
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
-    base_currency = serializers.CharField()
 
     class Meta:
         model = User
