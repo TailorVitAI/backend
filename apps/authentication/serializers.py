@@ -13,7 +13,6 @@ class UserSummarySerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "username",
-            "full_name",
             "is_staff",
         )
 
