@@ -123,7 +123,7 @@ class Tailor(BaseModel):
         max_length=128,
     )
     description = models.TextField()
-    additional = models.TextField()
+    additional = models.TextField(default="")
 
 
 class CurriculumVitae(BaseModel):
