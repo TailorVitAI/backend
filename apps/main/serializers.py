@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from apps.main.logics.generate_cv import generate_cv
 import apps.main.models as MODELS
 
 
@@ -86,11 +87,12 @@ class RequestCreateTailorSerializer(serializers.ModelSerializer):
         profile = MODELS.Profile.objects.get(
             user=request.user,
         )  # TODO: fix for multiple profiles for a single user
-        profile = MODELS.Tailor.objects.create(
+        tailor = MODELS.Tailor.objects.create(
             profile=profile,
             **validated_data,
         )
-        return profile
+        generate_cv(tailor)
+        return tailor
 
 
 class RequestUpdateTailorSerializer(serializers.ModelSerializer):
@@ -100,6 +102,12 @@ class RequestUpdateTailorSerializer(serializers.ModelSerializer):
             "model_modified_at",
             "model_created_at",
         )
+
+    def update(self, instance: MODELS.Tailor, validated_data):
+        response = super().update(instance, validated_data)
+        instance.refresh_from_db()
+        generate_cv(instance)
+        return response
 
 
 class CurriculumVitaeSerializer(serializers.ModelSerializer):
