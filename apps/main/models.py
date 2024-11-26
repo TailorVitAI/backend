@@ -140,7 +140,7 @@ class CurriculumVitae(BaseModel):
     uri = models.CharField(
         max_length=128,
     )
-    fit = models.IntegerField(
+    fitness = models.IntegerField(
         help_text="an integer value between 0 and 5",
     )
     comment = models.TextField(
