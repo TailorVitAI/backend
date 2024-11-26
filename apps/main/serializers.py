@@ -63,3 +63,49 @@ class ExperienceSerializer(serializers.ModelSerializer):
     class Meta:
         model = MODELS.Experience
         fields = "__all__"
+
+
+class TailorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MODELS.Tailor
+        fields = "__all__"
+
+
+class RequestCreateTailorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MODELS.Tailor
+        exclude = (
+            "id",
+            "profile",
+            "model_modified_at",
+            "model_created_at",
+        )
+
+    def create(self, validated_data):
+        request = self.context.get("request")
+        profile = MODELS.Profile.objects.get(
+            user=request.user,
+        )  # TODO: fix for multiple profiles for a single user
+        profile = MODELS.Tailor.objects.create(
+            profile=profile,
+            **validated_data,
+        )
+        return profile
+
+
+class RequestUpdateTailorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MODELS.Tailor
+        exclude = (
+            "model_modified_at",
+            "model_created_at",
+        )
+
+
+class CurriculumVitaeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MODELS.CurriculumVitae
+        exclude = (
+            "tailor",
+            "meta",
+        )

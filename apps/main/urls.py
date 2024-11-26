@@ -15,6 +15,16 @@ router.register(
     VIEWS.ExperienceViewSet,
     basename="experience",
 )
+router.register(
+    r"tailor",
+    VIEWS.TailorViewSet,
+    basename="tailor",
+)
+router.register(
+    r"curriculum_vitae",
+    VIEWS.CurriculumVitaeViewSet,
+    basename="curriculum_vitae",
+)
 
 urlpatterns = [
     path("", include(router.urls)),
