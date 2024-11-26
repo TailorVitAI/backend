@@ -132,6 +132,7 @@ class Tailor(BaseModel):
 
 
 class CurriculumVitae(BaseModel):
+
     tailor = models.ForeignKey(
         Tailor,
         on_delete=models.CASCADE,
@@ -139,6 +140,15 @@ class CurriculumVitae(BaseModel):
     uri = models.CharField(
         max_length=128,
     )
-    comment = models.TextField()
-    content = models.JSONField()
-    meta = models.JSONField()
+    fit = models.IntegerField(
+        help_text="an integer value between 0 and 5",
+    )
+    comment = models.TextField(
+        help_text="AI's comment about the CV and position match",
+    )
+    content = models.TextField(
+        help_text="latex text for CV to be rendered",
+    )
+    meta = models.JSONField(
+        help_text="meta information including prompt and model versions",
+    )
