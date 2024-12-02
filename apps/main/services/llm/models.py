@@ -6,12 +6,15 @@ class ExperienceModel(BaseModel):
     starting: date | None
     ending: date | None
     title: str
+    role: str
     location: str
     url: str | None
     description: str
 
 
 class CVModel(BaseModel):
+    summary: str
+    title: str
     skills: list[str]
     hobbies: list[str]
     interests: list[str]
@@ -26,6 +29,7 @@ class PositionModel(BaseModel):
     description: str
 
 
-class CVGeneratorModel(CVModel):
+class CVGeneratorModel(BaseModel):
     comment: str
     fitness: int
+    cv: CVModel
