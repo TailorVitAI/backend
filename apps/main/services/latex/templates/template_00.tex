@@ -1,0 +1,136 @@
+\documentclass[11pt, a4paper]{article} 
+
+\usepackage[T1]{fontenc} 
+\usepackage[british]{babel}  
+\usepackage[left = 0mm, right = 0mm, top = 0mm, bottom = 0mm]{geometry}
+\usepackage{graphicx} 
+\usepackage{xcolor}  
+\usepackage{ragged2e}
+\usepackage{lato} 
+\renewcommand{\familydefault}{\sfdefault}
+
+\definecolor{primary_blue}{HTML}{1B63BA}
+\definecolor{secondary_text}{HTML}{535353}
+\definecolor{background_blue}{HTML}{BDD1F6}
+
+\usepackage[colorlinks = true, urlcolor = primary_blue, linkcolor = primary_blue]{hyperref}
+
+\newcommand{\location}[1]{\mbox{\color{secondary_text}\includegraphics[width=7pt]{pin.png} #1}}
+\newcommand{\dates}[1]{\hfill\mbox{\textit{\small{\color{primary_blue}#1}}}}
+\newcommand{\is}{\par\vskip 1.3ex plus .4ex}
+\newcommand{\headleft}[1]{\vspace{2ex}\textsc{\textbf{\color{primary_blue}#1}}\par\par}
+\newcommand{\headright}[1]{\vspace*{2.5ex}\textit{\textbf{\large\color{primary_blue}#1}}\par\vspace*{-2ex}{\color{primary_blue}\hrulefill}\par}
+\newcommand{\titlerole}[1]{\textbf{\large{#1}}}
+
+
+\begin{document}
+
+\setlength{\topskip}{0pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\fboxsep}{0pt}
+\pagestyle{empty}
+\raggedbottom
+
+\begin{minipage}[t]{0.33\textwidth}
+\colorbox{primary_blue}{\begin{minipage}[t][5mm][t]{\textwidth}\null\hfill\null\end{minipage}}
+
+\vspace{-.2ex}
+\colorbox{background_blue!90}{
+    \color{secondary_text}
+    
+    \kern0.07\textwidth\relax
+    \begin{minipage}[t][293mm][t]{0.82\textwidth}
+    \raggedright
+    \vspace*{2.5ex}
+    
+    \color{black}
+    \includegraphics[width=12pt]{company.png} \raisebox{0.5ex}{[[company]]}\vspace{0.4ex} \\
+    \includegraphics[width=12pt]{map.png} \raisebox{0.5ex}{[[location]]}\vspace{0.4ex} \\
+    \includegraphics[width=12pt]{phone.png} \raisebox{0.5ex}{\href{tel:[[telephone]]}{[[telephone]]}}\vspace{0.4ex} \\
+    \includegraphics[width=12pt]{mail.png} \raisebox{0.5ex}{\href{mailto:[[email]]}{[[email]]}}\vspace{0.4ex} \\
+    \includegraphics[width=12pt]{linkedin.png} \raisebox{0.5ex}{\url{[[linkedin]]}\vspace{0.4ex}} \\
+    \includegraphics[width=12pt]{github.png} \raisebox{0.5ex}{\url{[[github]]}}\vspace{0.4ex} \\
+    \includegraphics[width=12pt]{user.png} \raisebox{0.5ex}{\url{[[website]]}}\vspace{0.4ex} \\
+    
+    \color{secondary_text}
+    \begin{justify}
+    \headleft{SUMMARY}\textit{[[summary]]}
+    \end{justify}
+    \vspace{-2ex}
+    
+    %% -------------------------------------------------------
+    %% SKILLS
+    [[$ if skills $]]
+        \headleft{SKILLS}
+        \vspace{-2ex}
+        \begin{justify}
+            [[$ for skill in skills $]][[skill]] \textcolor{white}{•}[[$ endfor $]]
+        \end{justify}
+        \vspace{-2ex}
+    [[$ endif $]]
+    %% -------------------------------------------------------
+    %% LANGUAGES
+    [[$ if languages $]]
+        \headleft{LANGUAGES}
+        [[$ for language in languages $]]
+            \textbf{[[language.name]]}\hfill [[language.level]]\\
+        [[$ endfor $]]
+    [[$ endif $]]
+    %% -------------------------------------------------------
+    %% INTERESTS
+    [[$ if projects $]]
+        \headleft{INTERESTS and RESEARCHES}
+        [[$ for interest in interests $]]
+            [[interest]] \\
+        [[$ endfor $]]
+    [[$ endif $]]
+    
+    \end{minipage}\kern0.09\textwidth\relax
+}
+\end{minipage}
+\hskip1.2em
+\begin{minipage}[t]{0.62\textwidth}
+\setlength{\parskip}{0.8ex}
+\vspace{3ex}
+
+%% -------------------------------------------------------
+%% name and title 
+\Huge\textbf{[[name]]}\normalsize \\
+\large\textbf{[[title]]}\normalsize 
+%% -------------------------------------------------------
+%% CARRIER
+[[$ if projects $]]
+    \headright{WORK EXPERIENCE}
+    [[$ for carrier in carriers $]]
+        \location{[[carrier.location]]} \dates{[[carrier.date]]} \\
+        \titlerole{[[carrier.title]] | [[carrier.role]]} \\
+        \small{[[career.description]]}
+        \is
+    [[$ endfor $]]
+[[$ endif $]]
+%% -------------------------------------------------------
+%% PROJECTS
+[[$ if projects $]]
+    \headright{PROJECTS}
+    [[$ for project in projects $]]
+        \location{[[project.location]]} \dates{[[project.date]]} \\
+        \titlerole{[[project.title]] | [[project.role]]} \\
+        \small{[[project.description]]}
+        \is
+    [[$ endfor $]]
+[[$ endif $]]
+%% -------------------------------------------------------
+%% EDUCATION
+[[$ if educations $]]
+    \headright{EDUCATION}
+    [[$ for education in educations $]]
+        \location{[[education.location]]} \dates{[[education.date]]} \\
+        \titlerole{[[education.title]] | [[education.role]]} \\
+        \small{[[education.description]]}
+        \is
+    [[$ endfor $]]
+[[$ endif $]]
+
+\end{minipage}
+\end{document}
