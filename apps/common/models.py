@@ -1,3 +1,5 @@
+import os
+
 from decimal import getcontext
 
 from django.db import models
@@ -20,3 +22,13 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
         ordering = ["model_created_at"]
+
+
+def file_upload_path(instance, filename):
+    # Determine the folder dynamically, e.g., based on a model attribute
+    folder_name = instance.__class__.__name__
+
+    # Construct the upload path
+    upload_path = os.path.join(folder_name, filename)
+
+    return upload_path

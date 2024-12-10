@@ -1,7 +1,7 @@
 from django.db import models
 
 from apps.authentication.models import User
-from apps.common.models import BaseModel
+from apps.common.models import BaseModel, file_upload_path
 
 
 class Profile(BaseModel):
@@ -137,9 +137,6 @@ class CurriculumVitae(BaseModel):
         Tailor,
         on_delete=models.CASCADE,
     )
-    uri = models.CharField(
-        max_length=128,
-    )
     fitness = models.IntegerField(
         help_text="an integer value between 0 and 5",
     )
@@ -151,4 +148,9 @@ class CurriculumVitae(BaseModel):
     )
     meta = models.JSONField(
         help_text="meta information including prompt and model versions",
+    )
+    file = models.FileField(
+        upload_to=file_upload_path,
+        null=True,
+        blank=True,
     )

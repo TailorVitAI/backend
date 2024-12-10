@@ -51,7 +51,6 @@ class CurriculumVitaeAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "tailor",
-        "uri",
         "model_created_at",
     )
     readonly_fields = (
