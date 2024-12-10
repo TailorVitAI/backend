@@ -1,0 +1,137 @@
+\documentclass[11pt, a4paper]{article} 
+
+\usepackage[left = 0mm, right = 0mm, top = 0mm, bottom = 0mm]{geometry}
+\usepackage{graphicx} 
+\usepackage{xcolor}  
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\definecolor{primaryblue}{HTML}{1B63BA}
+\definecolor{secondary_text}{HTML}{535353}
+\definecolor{background_blue}{HTML}{BDD1F6}
+
+\usepackage[colorlinks = true, urlcolor = primaryblue, linkcolor = primaryblue]{hyperref}
+
+\newcommand{\location}[1]{\mbox{\color{secondary_text}\includegraphics[width=7pt]{pin.png} #1}}
+\newcommand{\type}[1]{{\small{\color{primaryblue}#1}}}
+\newcommand{\dates}[1]{\hfill\mbox{\textit{\small{\color{primaryblue}#1}}}}
+\newcommand{\is}{\par\vskip 0.5ex plus .4ex}
+\newcommand{\headleft}[1]{\vspace{2ex}\textsc{\textbf{\color{primaryblue}#1}}\par\par}
+\newcommand{\headright}[1]{\vspace*{2.5ex}\textit{\textbf{\large\color{primaryblue}#1}}\par\vspace*{-2ex}{\color{primaryblue}\hrulefill}\par}
+\newcommand{\titlerole}[1]{\textbf{\small{#1}}}
+
+\renewcommand\UrlFont{\normalfont}
+
+\begin{document}
+
+\setlength{\topskip}{0pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\fboxsep}{0pt}
+\pagestyle{empty}
+\raggedbottom
+
+\begin{minipage}[t]{0.33\textwidth}
+\colorbox{primaryblue}{\begin{minipage}[t][5mm][t]{\textwidth}\null\hfill\null\end{minipage}}
+
+\vspace{-.2ex}
+\colorbox{background_blue!90}{
+    \color{secondary_text}
+    
+    \kern0.07\textwidth\relax
+    \begin{minipage}[t][293mm][t]{0.82\textwidth}
+    \raggedright
+    \vspace*{2.5ex}
+    
+    \color{black}
+    \includegraphics[width=12pt]{company.png} \raisebox{0.5ex}{[[profile.company]]}\vspace{0.4ex} \\
+    \includegraphics[width=12pt]{map.png} \raisebox{0.5ex}{[[profile.location]]}\vspace{0.4ex} \\
+    \includegraphics[width=12pt]{phone.png} \raisebox{0.5ex}{\href{tel:[[profile.phone]]}{[[profile.phone]]}}\vspace{0.4ex} \\
+    \includegraphics[width=12pt]{mail.png} \raisebox{0.5ex}{\href{mailto:[[profile.email]]}{[[profile.email]]}}\vspace{0.4ex} \\
+    \includegraphics[width=12pt]{linkedin.png} \raisebox{0.5ex}{\href{https://[[profile.linkedin]]}{[[profile.linkedin]]}\vspace{0.4ex}} \\
+    \includegraphics[width=12pt]{github.png} \raisebox{0.5ex}{\href{https://[[profile.github]]}{[[profile.github]]}}\vspace{0.4ex} \\
+    \includegraphics[width=12pt]{github.png} \raisebox{0.5ex}{\href{https://[[profile.website]]}{[[profile.website]]}}\vspace{0.4ex} \\
+    
+    \color{secondary_text}
+    \begin{justify}
+    \headleft{SUMMARY}\textit{[[cv.summary]]}
+    \end{justify}
+    \vspace{-2ex}
+    
+    %% -------------------------------------------------------
+    %% SKILLS
+    [[$ if cv.skills $]]
+        \headleft{SKILLS}
+        \vspace{1ex}
+        \begin{justify}
+            [[$ for skill in cv.skills $]][[skill]] \textcolor{white}{•} [[$ endfor $]]
+        \end{justify}
+        \vspace{-2ex}
+    [[$ endif $]]
+    %% -------------------------------------------------------
+    %% LANGUAGES
+    [[$ if cv.languages $]]
+        \vspace{-1ex}
+        \headleft{LANGUAGES}
+        [[$ for language in cv.languages $]]
+            \textbf{[[language]]}%\hfill [[language.level]]\\
+        [[$ endfor $]]
+    [[$ endif $]]
+    %% -------------------------------------------------------
+    %% INTERESTS
+    [[$ if cv.interests $]]
+        \headleft{INTERESTS and RESEARCHES}
+        [[$ for interest in cv.interests $]]
+            [[interest]] \\
+        [[$ endfor $]]
+    [[$ endif $]]
+    
+    \end{minipage}\kern0.09\textwidth\relax
+}
+\end{minipage}
+\hskip1.2em
+\begin{minipage}[t]{0.62\textwidth}
+\setlength{\parskip}{0.8ex}
+\vspace{3ex}
+
+%% -------------------------------------------------------
+%% name and title 
+\Huge\textbf{[[full_name]]}\normalsize \\
+\large\textbf{[[cv.title]]}\normalsize 
+\small
+%% -------------------------------------------------------
+%% CARRIER
+[[$ if cv.carriers $]]
+    \headright{WORK EXPERIENCE}
+    [[$ for carrier in cv.carriers $]]
+        \location{[[carrier.location]]} \type{[[carrier.type]]} - \href{https://[[carrier.url]]}{[[carrier.url]]} \dates{[[carrier.starting]] to [[carrier.ending]]}  \\
+        \titlerole{[[carrier.title]] | [[carrier.role]]} \\
+        \small{[[carrier.description]]}
+        \is
+    [[$ endfor $]]
+[[$ endif $]]
+%% -------------------------------------------------------
+%% PROJECTS
+[[$ if cv.projects $]]
+    \headright{PROJECTS}
+    [[$ for project in cv.projects $]]
+        \location{[[project.location]]} \type{[[project.type]]} - \href{https://[[project.url]]}{[[project.url]]} \dates{[[project.starting]] to [[project.ending]]} \\
+        \titlerole{[[project.title]] | [[project.role]]} \\
+        \small{[[project.description]]}
+        \is
+    [[$ endfor $]]
+[[$ endif $]]
+%% -------------------------------------------------------
+%% EDUCATION
+[[$ if cv.educations $]]
+    \headright{EDUCATION}
+    [[$ for education in cv.educations $]]
+        \location{[[education.location]]} - \type{[[education.type]]} - \href{https://[[education.url]]}{[[education.url]]} \dates{[[education.starting]] to [[education.ending]]} \\
+        \titlerole{[[education.title]] | [[education.role]]} \\
+        \small{[[education.description]]}
+        \is
+    [[$ endfor $]]
+[[$ endif $]]
+
+\end{minipage}
+\end{document}
