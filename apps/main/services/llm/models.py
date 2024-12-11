@@ -6,6 +6,7 @@ class ExperienceModel(BaseModel):
     starting: date | None
     ending: date | None
     title: str
+    type: str | None
     role: str
     location: str | None
     url: str | None

@@ -15,6 +15,7 @@ def generate_cv(tailor: MODELS.Tailor):
         LLM_MODELS.ExperienceModel(
             title=exp.title,
             role=exp.role,
+            type=exp.get_type_display(),
             location=exp.location,
             description=exp.description,
             url=exp.url,
@@ -28,6 +29,7 @@ def generate_cv(tailor: MODELS.Tailor):
         LLM_MODELS.ExperienceModel(
             title=exp.title,
             role=exp.role,
+            type=exp.get_type_display(),
             location=exp.location,
             description=exp.description,
             url=exp.url,
@@ -41,6 +43,7 @@ def generate_cv(tailor: MODELS.Tailor):
         LLM_MODELS.ExperienceModel(
             title=exp.title,
             role=exp.role,
+            type=exp.get_type_display(),
             location=exp.location,
             description=exp.description,
             url=exp.url,
@@ -118,7 +121,6 @@ def generate_cv(tailor: MODELS.Tailor):
         cv.save()
 
     finally:
-        # shutil.rmtree(output_dir)
-        ...
+        shutil.rmtree(output_dir)
 
     return response
