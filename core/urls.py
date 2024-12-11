@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from django.conf.urls.static import static
 
 from apps.authentication.urls import urlpatterns as auth_urlpatterns
 from apps.main.urls import urlpatterns as main_urlpatterns
@@ -15,3 +16,8 @@ urlpatterns = [
 
 if settings.SWAGGER:
     urlpatterns.append(path("", include(swagger_router)))
+
+urlpatterns += static(
+    settings.MEDIA_URL,
+    document_root=settings.MEDIA_ROOT,
+)  # TODO: serve by ngnix
