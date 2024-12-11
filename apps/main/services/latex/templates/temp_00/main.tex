@@ -56,13 +56,12 @@
     \begin{justify}
     \headleft{SUMMARY}\textit{[[cv.summary]]}
     \end{justify}
-    \vspace{-2ex}
+    \vspace{1ex}
     
     %% -------------------------------------------------------
     %% SKILLS
     [[$ if cv.skills $]]
         \headleft{SKILLS}
-        \vspace{1ex}
         \begin{justify}
             [[$ for skill in cv.skills $]][[skill]] \textcolor{white}{•} [[$ endfor $]]
         \end{justify}
@@ -71,10 +70,10 @@
     %% -------------------------------------------------------
     %% LANGUAGES
     [[$ if cv.languages $]]
-        \vspace{-1ex}
+        \vspace{2ex}
         \headleft{LANGUAGES}
         [[$ for language in cv.languages $]]
-            \textbf{[[language]]}%\hfill [[language.level]]\\
+            {[[language]]}%\hfill [[language.level]]\\
         [[$ endfor $]]
     [[$ endif $]]
     %% -------------------------------------------------------
