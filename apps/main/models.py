@@ -77,6 +77,7 @@ class Experience(BaseModel):
         PART_TIME = "PRT", "Part-time"
         SELF_EMPLOYED = "SLE", "Self-employed"
         VOLUNTEER = "VOL", "Volunteer"
+        CONTRACT = "CON", "Contract"
 
     profile = models.ForeignKey(
         Profile,
@@ -90,6 +91,8 @@ class Experience(BaseModel):
     )
     location = models.CharField(
         max_length=128,
+        blank=True,
+        null=True,
     )
     type = models.CharField(
         choices=Type.choices,

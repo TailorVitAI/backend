@@ -7,7 +7,7 @@ class ExperienceModel(BaseModel):
     ending: date | None
     title: str
     role: str
-    location: str
+    location: str | None
     url: str | None
     description: str
 
